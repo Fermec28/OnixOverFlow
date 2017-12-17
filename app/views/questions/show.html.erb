@@ -14,7 +14,7 @@
 <% @question.comments.each do |comment| %>
 
 	<% if user_signed_in? && comment.user_id == current_user.id %>
-		<li> <%=comment.body %>
+		<li> <%= markdown(comment.body) %>
 			 <%= link_to "Editar", [comment.commentable ,comment]%> 	
 			 <%= link_to "Eliminar", [comment.commentable ,comment], method: :delete%> 
 		</li>
