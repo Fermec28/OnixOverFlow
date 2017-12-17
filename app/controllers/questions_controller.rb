@@ -18,8 +18,7 @@ class QuestionsController < ApplicationController
 		question = Question.new(question_params)
 		if question.save
 			mail=UserMailer.welcome_email(current_user)
-			response= mail.deliver_now
-			p response
+			response= mail.deliver_now			
 			redirect_to question
 		else
 			@errors= question.errors.full_messages
