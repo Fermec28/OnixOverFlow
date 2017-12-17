@@ -17,7 +17,7 @@ class QuestionsController < ApplicationController
 	def create		
 		question = Question.new(question_params)
 		if question.save
-			mail=UserMailer.welcome_email(current_user)
+			mail=QuestionMailer.new_question_email(question)
 			response= mail.deliver_now			
 			redirect_to question
 		else

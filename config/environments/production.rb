@@ -88,16 +88,17 @@ Rails.application.configure do
 
 
 
-config.action_mailer.delivery_method = :smtp
 # SMTP settings for mailgun
-ActionMailer::Base.smtp_settings = {
+  ActionMailer::Base.smtp_settings = {
   :port           => 587,
   :address        => "smtp.mailgun.org",
   :domain         => ENV['MAIL_GUN_DOMAIN'],
   :user_name      => ENV['MAIL_GUN_USERNAME'],
   :password       => ENV['MAIL_GUN_PASSWORD'],
   :authentication => :plain,
-}
+  }
+
+  config.action_mailer.delivery_method = :smtp
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false

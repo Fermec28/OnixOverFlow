@@ -3,7 +3,7 @@ class UserMailer < ApplicationMailer
     	@user = user
     	text= render_to_string ( :welcome_email )     	 	 	
     	mg_client = Mailgun::Client.new ENV['MAIL_GUN_KEY']
-    	message_params = {:from    => ENV['MAIL_GUN_GMAIL_USERNAME'],
+    	message_params = {:from    => 'info@OnixOverflow.com',
                       :to      => @user.email,
                       :subject => 'Bienvenido a OnixOverFlow',                      
                       :html    =>  text.to_str}
