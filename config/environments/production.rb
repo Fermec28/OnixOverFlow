@@ -89,6 +89,10 @@ Rails.application.configure do
 
 
 # SMTP settings for mailgun
+
+
+config.action_mailer.default_url_options = { :host => 'onixoverflow.herokuapp.com' }
+
   ActionMailer::Base.smtp_settings = {
   :port           => 587,
   :address        => "smtp.mailgun.org",
