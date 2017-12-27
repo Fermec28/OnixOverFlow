@@ -1,0 +1,9 @@
+<h1>Hola <%=@answer.question.user.email%><h1>
+
+<h3>Tal vez la siguiente respuesta te interese:</h3>
+<h3>Pregunta:</h3>
+<h3><%= @answer.question.title %></h3>
+<h3>Respuesta:</h3>
+<h4><%= @answer.body%></h4>
+<p>Puedes darle seguimiento <%= link_to "aqui",@answer.question%></p>
+<p>No olvides agradecer a <%= @answer.user.email%></p>

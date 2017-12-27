@@ -5,6 +5,8 @@ class AnswersController < ApplicationController
 		answer= Answer.new(answer_params)
 
 		if answer.save
+			mail=AnswerMailer.new_answer_email(answer)
+			response= mail.deliver_now
 			redirect_to answer.question
 		else
 			@error= answer.errors.full_messages
