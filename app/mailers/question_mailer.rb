@@ -2,7 +2,8 @@ class QuestionMailer < ApplicationMailer
 
 	def new_question_email(question)
     	@question = question
-    	text= render_to_string ( :new_question_email )     	 	 	
+    	text= render_to_string ( :new_question_email )
+    	puts text     	 	 	
     	mg_client = Mailgun::Client.new ENV['MAIL_GUN_KEY']
     	message_params = {:from    => 'info@OnixOverflow.com',
                       :to      => @question.user.email,
