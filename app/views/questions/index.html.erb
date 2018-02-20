@@ -1,7 +1,19 @@
 <h1>Hola OnixOverflow</h1>
 <%= link_to "crea una Nueva Pregunta", new_question_path %>
-<ul>
+
 <% @questions.each do |question|%>
-	<li> <%=  link_to question.title, question %></li>
+	<div class="panel panel-primary">
+  		<div class="panel-heading">
+    		<h4><%= question.title%></h4>
+  		</div>
+  		<div class="panel-body">
+    		<blockquote class="blockquote mb-0">
+      			<p> <%= link_to question.question, question%></p>
+      			<footer class="blockquote-footer"><%= question.user.email %> <cite title="Source Title"><%=question.created_at %></cite></footer>
+    		</blockquote>
+  		</div>
+	</div>
 <%end %>
-</ul>
+
+
+
