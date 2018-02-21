@@ -7,6 +7,7 @@ class AnswersController < ApplicationController
 		if answer.save
 			mail=AnswerMailer.new_answer_email(answer)
 			response= mail.deliver_now
+			flash[:success] = "Respuesta Creada"
 			redirect_to answer.question
 		else
 			@error= answer.errors.full_messages
