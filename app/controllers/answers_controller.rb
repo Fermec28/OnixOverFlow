@@ -7,10 +7,11 @@ class AnswersController < ApplicationController
 		if answer.save
 			mail=AnswerMailer.new_answer_email(answer)
 			response= mail.deliver_now
-			flash[:success] = "Respuesta Creada"
+			flash[:success] = "Respuesta Creada"			
 			redirect_to answer.question
 		else
-			@error= answer.errors.full_messages
+			@errors= answer.errors.full_messages
+			flash[:danger] = @errors		
 			redirect_to answer.question
 		end
 	end
@@ -23,9 +24,11 @@ class AnswersController < ApplicationController
 	def update
 		answer= Answer.find(params[:id])
 		if answer.update(answer_params)
+			flash[:success] = "Respuesta Actualizada"
 			redirect_to answer.question
 		else
 			@errors= answer.errors.full_messages
+			flash[:danger] = @error
 			render :show
 		end
 	end
@@ -33,6 +36,7 @@ class AnswersController < ApplicationController
 	def destroy
 		answer= Answer.find(params[:id])
 		answer.destroy
+		flash[:info] = "Respuesta Eliminada"
 		redirect_to question_path(params[:question_id])
 	end
 

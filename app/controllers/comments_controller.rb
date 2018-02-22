@@ -6,7 +6,8 @@ class CommentsController < ApplicationController
 		params = comment_params
 		commentable = params[:commentable_type].constantize.find(params[:commentable_id])
 	    comment = commentable.comments.new(params)
-	    if comment.save	    	
+	    if comment.save	  
+	    	flash[:success] = "Comentario Creado"	  	
 	    	if commentable.instance_of? Question
 				redirect_to commentable
 			elsif commentable.instance_of? Answer
@@ -14,18 +15,19 @@ class CommentsController < ApplicationController
 			end
 		else
 			@errors = comment.errors.full_messages
+			flash[:danger] = @errors
 			if commentable.instance_of? Question
 				render commentable
 			elsif commentable.instance_of? Answer
 				render commentable.question	
 			end 
-	    end
-		#pendiente logica para comments desde answer
+	    end		
 	end
 
 	def destroy		
 		comment= Comment.find(params[:id])
 		comment.destroy
+		flash[:info] = "Comentario Eliminado"	
 		if params[:question_id]
 			redirect_to question_path(params[:question_id])
 		elsif params[:answer_id]

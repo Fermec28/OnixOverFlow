@@ -1,9 +1,5 @@
 class QuestionsController < ApplicationController
-	before_action :set_locale
-		def set_locale
-  			I18n.locale = params[:locale] || I18n.default_locale
-		end
-	before_action :authenticate_user!, only:[:new,:edit]
+	
 
 	def index
 		if params.has_key?(:question) && params[:question] != ""
@@ -22,10 +18,12 @@ class QuestionsController < ApplicationController
 		question = Question.new(question_params)
 		if question.save
 			mail=QuestionMailer.new_question_email(question)
-			response= mail.deliver_now			
+			response= mail.deliver_now
+			flash[:success] = "Pregunta Creada"			
 			redirect_to question
 		else
 			@errors= question.errors.full_messages
+			flash[:danger] = @errors
 			render :new
 		end
 	end
@@ -42,6 +40,7 @@ class QuestionsController < ApplicationController
 		question= Question.find(params[:id])
 		if question.update(question_params)
 			redirect_to question
+			flash[:success] = "Pregunta Actualizada"	
 		else
 			@errors= question.errors.full_messages
 			render :edit 
@@ -51,6 +50,7 @@ class QuestionsController < ApplicationController
 	def destroy
 		question= Question.find(params[:id])
 		question.destroy
+		flash[:info] = "Pregunta Eliminada"	
 		redirect_to questions_path
 	end
 
