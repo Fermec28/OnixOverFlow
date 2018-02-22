@@ -17,9 +17,9 @@ class CommentsController < ApplicationController
 			@errors = comment.errors.full_messages
 			flash[:danger] = @errors
 			if commentable.instance_of? Question
-				render commentable
+				redirect_to commentable
 			elsif commentable.instance_of? Answer
-				render commentable.question	
+				redirect_to commentable.question	
 			end 
 	    end		
 	end

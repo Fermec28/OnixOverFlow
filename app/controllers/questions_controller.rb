@@ -24,6 +24,7 @@ class QuestionsController < ApplicationController
 		else
 			@errors= question.errors.full_messages
 			flash[:danger] = @errors
+			@question = Question.new #para render del partial
 			render :new
 		end
 	end
