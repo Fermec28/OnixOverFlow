@@ -11,8 +11,8 @@
       			<p> <%= link_to question.question, question%></p>
       			<footer class="blockquote-footer">Pregunto <%= question.user.email %>  hace <%= time_ago_in_words(question.created_at) %> </footer>
     		</blockquote>
-    		<span class="glyphicon glyphicon-tags">Respuestas</span>   <span class="badge"><%= question.answers.count %></span>
-    		<span class="glyphicon glyphicon-heart">Votos</span>   <span class="badge"><%= question.votes.count %></span>
+    		<span class="glyphicon glyphicon-tags">Respuestas</span><span class="badge"><%= question.answers.count %></span>
+    		<span class="glyphicon glyphicon-heart">Votos</span><span class="badge"><%= question.votes.count %></span>
 
   		</div>
 	</div>
