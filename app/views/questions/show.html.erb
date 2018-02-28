@@ -8,7 +8,7 @@
 			<!-- Falta eliminar el voto-->
 			<%= link_to "", [vote.votable ,vote], method: :delete, class: "glyphicon glyphicon-heart"%> 
 		<%end%>
-			
+
 	<% end %>
 	<p><%= @question.votes.count %></p>
 	<h4><%= @question.title%></h4>
@@ -30,8 +30,7 @@
 		<% @question.comments.each do |comment| %>
 			<div class="panel panel-default">
 				<% if user_signed_in? && comment.user_id == current_user.id %>
-					<div class="panel-body"> <%= markdown(comment.body) %>
-			 			<% # =link_to "Editar", [comment.commentable ,comment]%> 	
+					<div class="panel-body"> <%= markdown(comment.body) %>			 				
 			 			<%= link_to "Eliminar", [comment.commentable ,comment], method: :delete, class: "glyphicon glyphicon-trash"%> 
 					</div>
 				<% else %>
@@ -54,18 +53,22 @@
 		<% @question.answers.each do |answer| %>
 			<div class="panel panel-default">
 
-
-				<% if user_signed_in? && answer.user_id == current_user.id %>
-					<div > 
-				   	 	<h1><%=markdown(answer.body) %> </h1>
+				<div > 	
+					<% if user_signed_in? %>
+						<% unless answer.votes.find_by(user_id: current_user.id) ? true : false %>
+							<%= render partial: "votes/formvote",locals: { votable: answer,vote: answer.votes.new }%>
+						<% else %>
+							<% vote = answer.votes.find_by(user_id: current_user.id) %> 							
+							<%= link_to "", [vote.votable ,vote], method: :delete, class: "glyphicon glyphicon-heart"%> 
+						<%end%>
+					<% end %>	
+					<p><%= answer.votes.count %></p>
+					<h1><%=markdown(answer.body) %> </h1>
+					<% if user_signed_in? && answer.user_id == current_user.id %>					
 			 			<%= link_to "Editar", [answer.question ,answer], class: "glyphicon glyphicon-wrench"%> 	
-			 			<%= link_to "Eliminar", [answer.question ,answer], method: :delete,  class: "glyphicon glyphicon-trash"%> 
-					</div>
-				<% else %>
-					<div>
-						<h1><%=answer.body %></h1>					
-					</div>
-				<% end %>
+			 			<%= link_to "Eliminar", [answer.question ,answer], method: :delete,  class: "glyphicon glyphicon-trash"%> 				
+					<% end %>
+				</div>
 			
 			<div class="panel panel-default">				
 					<div class="panel-heading"> Comentarios de Respuestas</div>			
