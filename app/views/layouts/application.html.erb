@@ -42,10 +42,16 @@
     <% flash.each do |key, value| %> 
         <% if value.is_a?(Array) %>
           <% value.each do |element|%>
-            <div class="alert alert-<%= key %>"><%= element %></div>
+            <div class="alert alert-<%= key %> alert-dismissible">
+              <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+              <%= element %>                
+            </div>
           <% end %>
         <% else %>
-        <div class="alert alert-<%= key %>"><%= value %></div>
+          <div class="alert alert-<%= key %>">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <%= value %>            
+          </div>
         <% end %>       
         
     <% end %>
