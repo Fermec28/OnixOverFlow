@@ -1,103 +1,114 @@
-<div class="jumbotron">
-	<%  if user_signed_in? %>
-		<% unless @question.votes.find_by(user_id: current_user.id) ? true : false %>
-			<%= render partial: "votes/formvote", 
-			locals: { votable: @question,vote: @question.votes.new }%>
-		<% else %>
-			<% vote = @question.votes.find_by(user_id: current_user.id) %>  
-			<!-- Falta eliminar el voto-->
-			<%= link_to "", [vote.votable ,vote], method: :delete, class: "glyphicon glyphicon-heart"%> 
-		<%end%>
-
-	<% end %>
-	<p><%= @question.votes.count %></p>
-	<h4><%= @question.title%></h4>
-	<p><%= markdown(@question.question) %></p>
-
-	<% if user_signed_in? %>
-		<% if  current_user.id ==  @question.user_id %>
-			<%= link_to "Editar", edit_question_path(@question),  class: "glyphicon glyphicon-wrench" %>
-			<%= link_to "Eliminar", @question , method: :delete, class: "glyphicon glyphicon-trash"%>
-		<% end %>
-	<% end %>
-
-	
-
-	<div class="comments">
-
-	<!-- Comentarios de Preguntas  -->
-		<h3>Comentarios de Prenguntas:</h3>
-		<% @question.comments.each do |comment| %>
-			<div class="panel panel-default">
-				<% if user_signed_in? && comment.user_id == current_user.id %>
-					<div class="panel-body"> <%= markdown(comment.body) %>			 				
-			 			<%= link_to "Eliminar", [comment.commentable ,comment], method: :delete, class: "glyphicon glyphicon-trash"%> 
-					</div>
-				<% else %>
-					<div class="panel-body" class="list-group-item"><%=comment.body %></div>
-				<% end %>
- 			</div> <!-- end Div panel-->
-		<% end%> <!-- End of comments iterator-->
-
-		<% if user_signed_in? %>
-			<% unless @question.comments.find_by(user_id:current_user.id) %>
-				<%= render partial: "comments/formcomment", locals: { commentable: @question,comment: @question.comments.new} %>
-			<% end %>
-		<% end %>
-	</div> <!-- End of class comments-->
-</div> <!--End of jumbotron-->
-
-<div >
-	<h3>Respuestas:</h3>
-	<div >
-		<% @question.answers.each do |answer| %>
-			<div class="panel panel-default">
-
-				<div > 	
-					<% if user_signed_in? %>
-						<% unless answer.votes.find_by(user_id: current_user.id) ? true : false %>
-							<%= render partial: "votes/formvote",locals: { votable: answer,vote: answer.votes.new }%>
+<div class="container">
+	<div>
+		<div class="col-sm-10 col-sm-offset-1">			
+			
+			<h2> <%= @question.title%></h2>
+			<div class= "row">
+				<div class="vote-area col-md-2">
+					<h3><%= @question.votes.count %></h3>
+					<%  if user_signed_in? %>
+						<% unless @question.votes.find_by(user_id: current_user.id) ? true : false %>
+							<%= render partial: "votes/formvote",locals: { votable: @question,vote: @question.votes.new }%>
 						<% else %>
-							<% vote = answer.votes.find_by(user_id: current_user.id) %> 							
+							<% vote = @question.votes.find_by(user_id: current_user.id) %>  
+			<!-- Falta eliminar el voto-->
 							<%= link_to "", [vote.votable ,vote], method: :delete, class: "glyphicon glyphicon-heart"%> 
 						<%end%>
-					<% end %>	
-					<p><%= answer.votes.count %></p>
-					<h1><%=markdown(answer.body) %> </h1>
-					<% if user_signed_in? && answer.user_id == current_user.id %>					
-			 			<%= link_to "Editar", [answer.question ,answer], class: "glyphicon glyphicon-wrench"%> 	
-			 			<%= link_to "Eliminar", [answer.question ,answer], method: :delete,  class: "glyphicon glyphicon-trash"%> 				
 					<% end %>
 				</div>
-			
-			<div class="panel panel-default">				
-					<div class="panel-heading"> Comentarios de Respuestas</div>			
-					<% answer.comments.each do |comment| %>						
-							<% if user_signed_in? && comment.user_id == current_user.id %>
-								<div class="list-group-item"> <%= markdown(comment.body) %>
-			 						<% # =link_to "Editar", [comment.commentable ,comment]%> 	
-			 						<%= link_to "Eliminar", [comment.commentable ,comment], method: :delete , class: "glyphicon glyphicon-trash"%> 
-								</div>
-							<% else %>
-								<div class="list-group-item"> <%=comment.body %></div>
+
+				<div class="question-body col-md-10">
+					<h3><%= markdown(@question.question) %></h3>
+					<% if user_signed_in? %>
+						<% if  current_user.id ==  @question.user_id %>
+							<%= link_to "Editar", edit_question_path(@question),  class: "glyphicon glyphicon-wrench" %>
+							<%= link_to "Eliminar", @question , method: :delete, class: "glyphicon glyphicon-trash"%>
+						<% end %>
+					<% end %>	
+
+					<div class="comments">					
+					<!-- Comentarios de Preguntas  -->
+						<h4>Comentarios de Prenguntas:</h4>
+						<% @question.comments.each do |comment| %>
+							<div class="panel panel-default">
+								<% if user_signed_in? && comment.user_id == current_user.id %>
+									<div class="panel-body"> <%= markdown(comment.body) %>			 				
+			 							<%= link_to "Eliminar", [comment.commentable ,comment], method: :delete, class: "glyphicon glyphicon-trash"%> 
+									</div>
+								<% else %>
+									<div class="panel-body" class="list-group-item"><%=comment.body %></div>
+								<% end %>
+ 							</div> <!-- end Div panel-->
+						<% end%> <!-- End of comments iterator-->
+
+						<% if user_signed_in? %>
+							<% unless @question.comments.find_by(user_id:current_user.id) %>
+								<%= render partial: "comments/formcomment", locals: { commentable: @question,comment: @question.comments.new} %>
 							<% end %>
-						
-					<% end%>									
+						<% end %>
+					</div> <!-- End of class comments-->
+				</div>
+			</div>			
+
+
+			<div >
+				<h3><%= @question.answers.count%> Respuesta(s):</h3>
+				<hr>
+				<div  class="row">
+					<% @question.answers.each do |answer| %>
+
+						<div class="border-dark" >
+							<div> 
+								<div class="pull-right">
+								<% if user_signed_in? %>
+									<% unless answer.votes.find_by(user_id: current_user.id) ? true : false %>
+										<%= render partial: "votes/formvote",locals: { votable: answer,vote: answer.votes.new }%>
+									<% else %>
+										<% vote = answer.votes.find_by(user_id: current_user.id) %> 							
+										<%= link_to "", [vote.votable ,vote], method: :delete, class: "glyphicon glyphicon-heart"%> 
+									<%end%>
+								<% end %>	
+								<p><%= answer.votes.count %></p>
+
+								</div>
+								<h3><%=markdown(answer.body) %> </h3>
+								<% if user_signed_in? && answer.user_id == current_user.id %>					
+			 						<%= link_to "Editar", [answer.question ,answer], class: "glyphicon glyphicon-wrench"%> 	
+			 						<%= link_to "Eliminar", [answer.question ,answer], method: :delete,  class: "glyphicon glyphicon-trash"%> 				
+									<% end %>
+							</div>
+			
+							<div class="panel panel-default">				
+								<div class="panel-heading"> Comentarios de Respuestas</div>			
+									<% answer.comments.each do |comment| %>						
+										<% if user_signed_in? && comment.user_id == current_user.id %>
+											<div class="list-group-item">  <%= markdown(comment.body) %>
+			 									<% # =link_to "Editar", [comment.commentable ,comment]%> 	
+			 									<%= link_to "Eliminar", [comment.commentable ,comment], method: :delete , class: "glyphicon glyphicon-trash"%> 
+											</div>
+										<% else %>
+											<div class="list-group-item"> <%=comment.body %></div>
+										<% end %>						
+									<% end%>									
+									<% if user_signed_in? %>
+										<% unless answer.comments.find_by(user_id:current_user.id) %>
+											<%= render partial: "comments/formcomment", locals: { commentable: answer,comment: answer.comments.new} %>
+										<% end %>
+									<% end %>
+							</div> 	
+						</div>
+						<hr>
+					<% end%>
+				</div> 
+
 				<% if user_signed_in? %>
-					<% unless answer.comments.find_by(user_id:current_user.id) %>
-						<%= render partial: "comments/formcomment", locals: { commentable: answer,comment: answer.comments.new} %>
+					<% unless @question.answers.find_by(user_id:current_user.id) %>
+						<%= render partial: "answers/formanswer", locals: { answer: @question.answers.new} %>
 					<% end %>
 				<% end %>
-			</div> 	
 			</div>
-		<% end%>
-	</div> 
-
-	<% if user_signed_in? %>
-		<% unless @question.answers.find_by(user_id:current_user.id) %>
-			<%= render partial: "answers/formanswer", locals: { answer: @question.answers.new} %>
-		<% end %>
-	<% end %>
+		</div>
+	</div>
 </div>
 
 
