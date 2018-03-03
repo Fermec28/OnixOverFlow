@@ -73,8 +73,10 @@
 								<h3><%=markdown(answer.body) %> </h3>
 								<% if user_signed_in? && answer.user_id == current_user.id %>					
 			 						<%= link_to "Editar", [answer.question ,answer], class: "glyphicon glyphicon-wrench"%> 	
-			 						<%= link_to "Eliminar", [answer.question ,answer], method: :delete,  class: "glyphicon glyphicon-trash"%> 				
-									<% end %>
+			 						<%= link_to "Eliminar", [answer.question ,answer], method: :delete,  class: "glyphicon glyphicon-trash"%> 
+			 					<% else %>	
+			 						<br>			 									
+								<% end %>
 							</div>							
 						</div>
 						<hr>
@@ -87,7 +89,7 @@
 			 									<%= link_to "Eliminar", [comment.commentable ,comment], method: :delete , class: "glyphicon glyphicon-trash"%> 
 											</div>
 										<% else %>
-											<div class="list-group-item"> <%=comment.body %></div>
+											<div class="list-group-item"> <%=comment.body %></div>											
 										<% end %>						
 									<% end%>									
 									<% if user_signed_in? %>
