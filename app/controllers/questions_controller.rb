@@ -1,5 +1,7 @@
 class QuestionsController < ApplicationController
-	
+
+
+	before_action :authenticate_user!, except: [:index, :show]
 
 	def index
 		if params.has_key?(:question) && params[:question] != ""
