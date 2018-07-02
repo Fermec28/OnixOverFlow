@@ -1,22 +1,28 @@
-<h1>Hola OnixOverflow</h1>
+<h2>Top Questions</h2>
 <%= link_to "crea una Nueva Pregunta", new_question_path %>
 
-<% @questions.each do |question|%>
-	<div class="panel panel-primary">
-  		<div class="panel-heading">
-    		<h4><%= question.title%></h4>
-  		</div>
-  		<div class="panel-body">
-    		<blockquote class="blockquote mb-0">
-      			<p> <%= link_to question.question, question%></p>
-      			<footer class="blockquote-footer">Pregunto <%= question.user.email %>  hace <%= time_ago_in_words(question.created_at) %> </footer>
-    		</blockquote>
-    		<span class="glyphicon glyphicon-tags">Respuestas</span><span class="badge"><%= question.answers.count %></span>
-    		<span class="glyphicon glyphicon-heart">Votos</span><span class="badge"><%= question.votes.count %></span>
 
-  		</div>
-	</div>
-<%end %>
+  <ul class="list-group">
+  <% @questions.each do |question|%>
+    <div class="row list-group-item">
+      <div class="col-sm-4 text-center"> 
+        <div class="col-sm-6 "> 
+          <div><%= question.answers.count %> </div>
+          <div> Answers</div>
+        </div>
+        <div class="col-sm-6"> <%= question.votes.count %> 
+        <div>Votes</div>
+        </div>
+      </div>
+      <div class="col-sm-8">  <%= link_to question.title, question%> 
+       <p>Pregunta realizada por <%= question.user.email%></p>
+      </div>
+    </div>
+  <%end %>
+  </ul>
+
+
+
 
 
 
