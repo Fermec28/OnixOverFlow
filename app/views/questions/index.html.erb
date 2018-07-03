@@ -1,7 +1,6 @@
 <h2>Top Questions</h2>
 <%= link_to "crea una Nueva Pregunta", new_question_path %>
-
-
+ 
   <ul class="list-group">
   <% @questions.each do |question|%>
     <div class="row list-group-item">
@@ -15,7 +14,7 @@
         </div>
       </div>
       <div class="col-sm-8">  <%= link_to question.title, question%> 
-       <p>Pregunta realizada por <%= question.user.email%></p>
+       <p>Pregunta realizada por <%= question.user.email%> hace <%= time_ago_in_words(question.created_at) %> </p>
       </div>
     </div>
   <%end %>

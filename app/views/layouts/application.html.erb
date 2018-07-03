@@ -9,14 +9,11 @@
   </head>
 
   <body>
-  	 <nav class="navbar navbar-inverse">
+  	 <nav class="navbar navbar-inverse navbar-fixed-top">
   		<div class="container-fluid">
     		<div class="navbar-header">
       			<a class="navbar-brand" href="/">OnixOverFlow</a>
     		</div>
-    		<ul class="nav navbar-nav">
-      			<li class="active"><a href="/">Home</a></li>
-    		</ul>
     		<ul class="nav navbar-nav navbar-right">
     			<li>
     			 <%= form_tag '/', method: :get do %>        			
@@ -39,6 +36,9 @@
   		</div>
 	   </nav>  
     <div class="container"> 
+    <br>
+    <br>
+    <br>
     <% flash.each do |key, value| %> 
         <% if value.is_a?(Array) %>
           <% value.each do |element|%>
